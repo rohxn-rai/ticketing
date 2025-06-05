@@ -11,15 +11,15 @@ const errorHandler = (
     res.status(err.statusCode).send({
       errors: err.serializeErrors(),
     });
+  } else {
+    res.status(400).send({
+      errors: [
+        {
+          message: err.message,
+        },
+      ],
+    });
   }
-
-  res.status(400).send({
-    errors: [
-      {
-        message: err.message,
-      },
-    ],
-  });
 };
 
 export default errorHandler;
