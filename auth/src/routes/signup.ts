@@ -14,7 +14,7 @@ router.post(
       .isLength({ min: 8, max: 32 })
       .withMessage("Password must be between 8 and 32 characters."),
   ],
-  (req: Request, res: Response): void => {
+  async (req: Request, res: Response) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
