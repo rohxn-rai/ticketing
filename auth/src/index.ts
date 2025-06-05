@@ -1,4 +1,6 @@
 import express, { json } from "express";
+import mongoose from "mongoose";
+
 import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
@@ -20,6 +22,17 @@ app.use(async (req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(8000, () => {
-  console.log("Listening on port 8000");
-});
+const start = async () => {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/ticketing-auth");
+    console.log("Connected to MongoDB :]");
+  } catch (err) {
+    console.log(err);
+  }
+
+  app.listen(8000, () => {
+    console.log("Listening on port 8000");
+  });
+};
+
+start();
