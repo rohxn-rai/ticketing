@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
+import cors from "cors";
 import dotenv from "dotenv";
 
 import { currentUserRouter } from "./routes/current-user";
@@ -15,6 +16,16 @@ dotenv.config();
 const app = express();
 
 app.enable("trust proxy");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(json());
 app.use(
   cookieSession({
