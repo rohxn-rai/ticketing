@@ -1,67 +1,23 @@
-import express, { json } from "express";
 import mongoose from "mongoose";
-import cookieSession from "cookie-session";
-import cors from "cors";
-import dotenv from "dotenv";
 
-import { currentUserRouter } from "./routes/current-user";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
-import errorHandler from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
-
-dotenv.config();
-
-const app = express();
-
-app.enable("trust proxy");
-
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-app.use(json());
-app.use(
-  cookieSession({
-    signed: false,
-    secure: false,
-    httpOnly: true,
-  })
-);
-
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
-
-app.use(async (req, res, next) => {
-  next(new NotFoundError());
-});
-
-app.use(errorHandler);
+import { app } from "./app";
 
 const start = async () => {
-  const PORT = 8000;
+  const PORT = 3000;
 
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
   }
 
   try {
-    await mongoose.connect("mongodb://localhost:27017/ticketing-auth");
+    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
     console.log("Connected to MongoDB :]");
   } catch (err) {
     console.log(err);
   }
 
   app.listen(PORT, () => {
-    console.log("Listening on port 8000");
+    console.log(`Listening on port ${PORT}`);
   });
 };
 
