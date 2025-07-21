@@ -15,6 +15,14 @@ interface UserDoc extends mongoose.Document {
   password: string;
 }
 
+interface UserRaw {
+  email: string;
+  password?: string;
+  _id?: mongoose.Types.ObjectId;
+  __v?: number;
+  id?: string;
+}
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -28,12 +36,13 @@ const userSchema = new mongoose.Schema(
   },
   {
     toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id;
+      transform(doc: UserDoc, ret: UserRaw) {
+        ret.id = ret._id!.toString();
         delete ret._id;
         delete ret.password;
         delete ret.__v;
       },
+      versionKey: false,
     },
   }
 );
@@ -43,6 +52,8 @@ userSchema.pre("save", async function (done) {
     const hashed = await Password.toHash(this.get("password"));
     this.set("password", hashed);
   }
+
+  done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {
