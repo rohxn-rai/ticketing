@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
 
 import { currentUser } from "../middlewares/current-user";
-import { requireAuth } from "../middlewares/require-auth";
+// import { requireAuth } from "../middlewares/require-auth";
+// helper middleware for other services
 
 const router = express.Router();
 
-router.get("/api/users/currentuser", currentUser, requireAuth, ((
+router.get("/api/users/currentuser", currentUser, ((
   req: Request,
   res: Response
 ) => {
