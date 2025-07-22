@@ -19,25 +19,16 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log("\n[New log]:");
-
     const { email, password } = req.body;
-
-    console.log("Initial Validation Completed.");
 
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log("Email in use!");
       throw new BadRequestError("Email in use");
     }
 
-    console.log("Email not in use, creating a new user.");
-
     const user = User.build({ email, password });
     await user.save();
-
-    console.log("User data saved in database.");
 
     const userJwt = jwt.sign(
       {
@@ -47,13 +38,9 @@ router.post(
       process.env.JWT_KEY!
     );
 
-    console.log("JWT created!");
-
     req.session = {
       jwt: userJwt,
     };
-
-    console.log("Token sent to the user!");
 
     res.status(201).send(user);
   }
