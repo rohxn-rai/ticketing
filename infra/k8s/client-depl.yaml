@@ -21,6 +21,11 @@ spec:
                 secretKeyRef:
                   name: opt-out
                   key: NEXT_TELEMETRY_DISABLED
+            - name: NEXT_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: next-base-url
+                  key: NEXT_BASE_URL
 
 ---
 apiVersion: v1
