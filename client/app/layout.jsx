@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import Header from "@/components/common/Header";
 
-import { getCurrentUser } from "@/utils/getCurrentUser";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,14 +19,12 @@ export const metadata = {
 };
 
 const RootLayout = async ({ children }) => {
-  const currentUser = await getCurrentUser();
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header currentUser={currentUser} />
+        <Header />
         {children}
       </body>
     </html>
