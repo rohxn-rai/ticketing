@@ -37,7 +37,7 @@ const SignupPage = () => {
     <div className="container flex mx-auto pt-24 pb-12">
       <div className="max-w-2xl w-full mx-auto">
         <form className="mx-6" onSubmit={onSubmit}>
-          <h1 className="text-center text-4xl">Sign up</h1>
+          <h1 className="text-center text-4xl">Sign Up</h1>
 
           {errors}
 
