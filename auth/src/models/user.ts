@@ -15,7 +15,7 @@ interface UserDoc extends mongoose.Document {
   password: string;
 }
 
-interface UserRaw {
+interface UserResponseData {
   email: string;
   password?: string;
   _id?: mongoose.Types.ObjectId;
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     toJSON: {
-      transform(doc: UserDoc, ret: UserRaw) {
+      transform(doc: UserDoc, ret: UserResponseData) {
         ret.id = ret._id!.toString();
         delete ret._id;
         delete ret.password;
