@@ -21,7 +21,7 @@ const SignupPage = () => {
       password,
     },
     message: "Unable to signup at the moment!",
-    onSuccess: () => replacePath("/"),
+    onSuccess: () => replacePath("/", "replace"),
   });
 
   const onSubmit = async (event) => {

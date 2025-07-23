@@ -2,8 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-const replacePath = (path) => {
-  redirect(path);
+const replacePath = (path, type) => {
+  redirect(path, type);
 };
 
 export { replacePath };
