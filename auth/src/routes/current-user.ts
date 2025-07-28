@@ -10,6 +10,8 @@ router.get("/api/users/currentuser", currentUser, ((
   req: Request,
   res: Response
 ) => {
+  console.log(`${new Date().toLocaleString()} - Checked for user!`);
+
   res.send({ currentUser: req.currentUser || null });
 }) as express.RequestHandler);
 

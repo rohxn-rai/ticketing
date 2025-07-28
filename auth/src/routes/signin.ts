@@ -49,6 +49,8 @@ router.post(
       jwt: userJwt,
     };
 
+    console.log(`${new Date().toLocaleString()} - User signed in!`);
+
     res.status(200).send(existingUser);
   }
 );
