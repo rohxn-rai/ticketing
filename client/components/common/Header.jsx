@@ -7,7 +7,7 @@ const Header = async () => {
   const currentUser = await getCurrentUser();
 
   return (
-    <header className="border-b border-border py-3 sticky top-0">
+    <header className="border-b border-border py-1.5 sticky top-0">
       <nav className="container mx-auto flex flex-row justify-between">
         <Link href="/" className="text-2xl font-bold">
           GitTix
