@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 
-import { currentUser } from "../middlewares/current-user";
+import currentUser from "../middlewares/current-user";
 // import { requireAuth } from "../middlewares/require-auth";
 // helper middleware for other services
 
