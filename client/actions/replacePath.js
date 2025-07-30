@@ -1,9 +1,11 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const replacePath = (path, type) => {
+  revalidatePath(path);
   redirect(path, type);
 };
 
-export { replacePath };
+export default replacePath;

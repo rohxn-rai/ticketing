@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { replacePath } from "@/actions/replacePath";
+import replacePath from "@/actions/replacePath";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,7 +28,7 @@ const SignupPage = () => {
     event.preventDefault();
     setLoading(true);
 
-    doRequest();
+    await doRequest();
 
     setLoading(false);
   };
