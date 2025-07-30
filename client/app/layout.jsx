@@ -2,6 +2,7 @@ import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import Header from "@/components/common/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
@@ -35,6 +36,8 @@ const RootLayout = async ({ children }) => {
           <Header />
           {children}
         </ThemeProvider>
+
+        <Toaster position="top-right" richColors expand={true} />
       </body>
     </html>
   );
