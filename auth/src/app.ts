@@ -6,8 +6,10 @@ import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-import { errorHandler } from "@ticketing-backend-packages/common";
-import { NotFoundError } from "@ticketing-backend-packages/common";
+import {
+  errorHandler,
+  NotFoundError,
+} from "@ticketing-backend-packages/common";
 
 dotenv.config();
 
