@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const replacePath = (path, type) => {
-  revalidatePath(path);
+  revalidatePath(path, "layout");
   redirect(path, type);
 };
 
