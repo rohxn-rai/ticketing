@@ -3,9 +3,11 @@ import cookieSession from "cookie-session";
 import dotenv from "dotenv";
 
 import {
+  currentUser,
   errorHandler,
   NotFoundError,
 } from "@ticketing-backend-packages/common";
+import { createTicketRouter } from "./routes/new";
 
 dotenv.config();
 
@@ -21,6 +23,10 @@ app.use(
     secure: process.env.NODE_ENV !== "test",
   })
 );
+
+app.use(currentUser);
+
+app.use(createTicketRouter);
 
 app.use(async (req, res, next) => {
   next(new NotFoundError());
