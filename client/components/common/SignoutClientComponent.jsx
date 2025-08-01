@@ -2,18 +2,23 @@
 
 import { useEffect } from "react";
 import useRequest from "@/hooks/use-request";
-import { replacePath } from "@/actions/replacePath";
+import replacePath from "@/actions/replacePath";
+import { toast } from "sonner";
 
 const SignoutClientComponent = () => {
   const { doRequest } = useRequest({
     url: "/api/users/signout",
     method: "post",
     body: {},
-    onSuccess: () => replacePath("/", "push"),
+    onSuccess: () => replacePath("/", "replace", true),
   });
 
   useEffect(() => {
-    doRequest();
+    toast.promise(doRequest(), {
+      loading: "Loading...",
+      success: "You are successfully signed out",
+      error: "Something went wrong",
+    });
   }, []);
 
   return <h1 className="text-2xl">Signing you out...</h1>;
