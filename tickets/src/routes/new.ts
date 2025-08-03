@@ -1,26 +1,36 @@
-import express, { Request, Response, NextFunction } from "express";
-import { NotAuthorizedError } from "@ticketing-backend-packages/common";
-// import { requireAuth } from "@ticketing-backend-packages/common";
+import express, { Request, Response } from "express";
+import { body } from "express-validator";
+import {
+  requireAuth,
+  validateRequest,
+} from "@ticketing-backend-packages/common";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
-const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  console.log("requireAuth called, currentUser:", req.currentUser);
-  if (!req.currentUser) {
-    console.log("Throwing NotAuthorizedError");
-    const error = new NotAuthorizedError();
-    console.log("Error statusCode:", error.statusCode);
-    console.log(
-      "Error instanceof NotAuthorizedError:",
-      error instanceof NotAuthorizedError
-    );
-    throw error;
-  }
-  next();
-};
+router.post(
+  "/api/tickets",
+  requireAuth,
+  [
+    body("title").not().isEmpty().withMessage("Title is required"),
+    body("price")
+      .isFloat({ gt: 0 })
+      .withMessage("Price must be greater than 0"),
+  ],
+  validateRequest,
+  async (req: Request, res: Response) => {
+    const { title, price } = req.body;
 
-router.post("/api/tickets", requireAuth, (req: Request, res: Response) => {
-  res.sendStatus(200);
-});
+    const ticket = Ticket.build({
+      title,
+      price,
+      userId: req.currentUser!.id,
+    });
+
+    await ticket.save();
+
+    res.status(201).send(ticket);
+  }
+);
 
 export { router as createTicketRouter };
