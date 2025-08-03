@@ -18,7 +18,7 @@
     ]
   },
   "dependencies": {
-    "@ticketing-backend-packages/common": "^1.0.5",
+    "@ticketing-backend-packages/common": "^1.0.6",
     "@types/cookie-session": "^2.0.49",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
@@ -38,8 +38,8 @@
     "@types/jest": "^30.0.0",
     "@types/supertest": "^6.0.3",
     "jest": "^30.0.5",
-    "mongodb-memory-server": "^10.1.4",
+    "mongodb-memory-server": "^10.2.0",
     "supertest": "^7.1.4",
-    "ts-jest": "^29.4.0"
+    "ts-jest": "^29.4.1"
   }
 }
