@@ -8,6 +8,7 @@ import {
   NotFoundError,
 } from "@ticketing-backend-packages/common";
 import { createTicketRouter } from "./routes/new";
+import { showTicketRouter } from "./routes/show";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(
 app.use(currentUser);
 
 app.use(createTicketRouter);
+app.use(showTicketRouter);
 
 app.use(async (req, res, next) => {
   next(new NotFoundError());
