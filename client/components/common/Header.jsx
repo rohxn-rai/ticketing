@@ -10,7 +10,7 @@ const Header = async () => {
     <header className="border-b border-border py-1.5 sticky top-0">
       <nav className="container mx-auto flex flex-row justify-between">
         <Link href="/" className="text-2xl font-bold">
-          GitTix
+          TicketSpot
         </Link>
 
         <div className="flex flex-row gap-8 align-middle">

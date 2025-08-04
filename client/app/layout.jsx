@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "GitTix",
+  title: "TicketSpot",
   description: "Ticketing Application for Buy and Selling Tickets!",
 };
 
