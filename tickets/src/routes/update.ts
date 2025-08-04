@@ -5,6 +5,7 @@ import {
   validateRequest,
   NotFoundError,
   NotAuthorizedError,
+  BadRequestError,
 } from "@ticketing-backend-packages/common";
 import { Ticket } from "../models/ticket";
 
@@ -27,10 +28,15 @@ router.put(
       throw new NotAuthorizedError();
     }
 
+    if (ticket.title === req.body.title && ticket.price === req.body.price) {
+      throw new BadRequestError("Must provide new data");
+    }
+
     ticket.set({
       title: req.body.title,
       price: req.body.price,
     });
+
     await ticket.save();
 
     res.send(ticket);
