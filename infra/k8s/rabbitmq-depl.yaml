@@ -15,6 +15,12 @@ spec:
       containers:
         - name: rabbitmq
           image: rabbitmq:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "rabbitmq-plugins enable rabbitmq_management && rabbitmq-server",
+            ]
           env:
             - name: RABBITMQ_DEFAULT_USER
               value: "admin"
