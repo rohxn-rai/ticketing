@@ -1,19 +1,16 @@
 import express, { json } from "express";
 import cookieSession from "cookie-session";
-import dotenv from "dotenv";
 
 import {
   currentUser,
   errorHandler,
   NotFoundError,
-} from "@ticketing-backend-packages/common";
+} from "@rohxnrai/todo-backend";
 
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
 import { indexTicketRouter } from "./routes/index";
 import { updateTicketRouter } from "./routes/update";
-
-dotenv.config();
 
 const app = express();
 

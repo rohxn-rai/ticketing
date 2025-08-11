@@ -1,6 +1,31 @@
-import mongoose from "mongoose";
-
 import { app } from "./app";
+import mongoose from "mongoose";
+import rabbitMQ from "./wrapper";
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const connectWithRetry = async (
+  connectFn: () => Promise<any>,
+  serviceName: string
+) => {
+  let attempts = 0;
+  const maxAttempts = 10;
+
+  while (attempts < maxAttempts) {
+    try {
+      await connectFn();
+      console.log(`✓ - Connected to ${serviceName}!`);
+      return;
+    } catch (err) {
+      attempts++;
+      console.log(
+        `${serviceName} connection failed (${attempts}/${maxAttempts}), retrying in 5s...`
+      );
+      if (attempts >= maxAttempts) throw err;
+      await sleep(5000);
+    }
+  }
+};
 
 const start = async () => {
   const PORT = 3000;
@@ -11,17 +36,23 @@ const start = async () => {
   if (!process.env.MONGODB_URI) {
     throw new Error("MONGODB_URI must be defined");
   }
-
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB :]");
-  } catch (err) {
-    console.log(err);
+  if (!process.env.RABBITMQ_URL) {
+    throw new Error("RABBITMQ_URL must be defined");
   }
+
+  await connectWithRetry(
+    () => mongoose.connect(process.env.MONGODB_URI!),
+    "MongoDB"
+  );
+
+  await connectWithRetry(() => rabbitMQ.connect(), "RabbitMQ");
 
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
 };
 
-start();
+start().catch((err) => {
+  console.error("Failed to start:", err);
+  process.exit(1);
+});

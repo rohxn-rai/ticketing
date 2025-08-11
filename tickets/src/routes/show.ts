@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { Ticket } from "../models/ticket";
-import { NotFoundError } from "@ticketing-backend-packages/common";
+import { NotFoundError } from "@rohxnrai/todo-backend";
 
 const router = express.Router();
 

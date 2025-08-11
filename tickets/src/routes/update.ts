@@ -6,7 +6,7 @@ import {
   NotFoundError,
   NotAuthorizedError,
   BadRequestError,
-} from "@ticketing-backend-packages/common";
+} from "@rohxnrai/todo-backend";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 
-import { currentUser } from "@ticketing-backend-packages/common";
+import { currentUser } from "@rohxnrai/todo-backend";
 // import { requireAuth } from "../middlewares/require-auth";
 // helper middleware for other services
 

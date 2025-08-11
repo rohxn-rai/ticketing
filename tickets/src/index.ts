@@ -14,7 +14,7 @@ const connectWithRetry = async (
   while (attempts < maxAttempts) {
     try {
       await connectFn();
-      console.log(`Connected to ${serviceName} ✓`);
+      console.log(`✓ - Connected to ${serviceName}!`);
       return;
     } catch (err) {
       attempts++;

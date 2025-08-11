@@ -1,17 +1,11 @@
 import express, { json } from "express";
 import cookieSession from "cookie-session";
-import dotenv from "dotenv";
 
 import { currentUserRouter } from "./routes/current-user";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-import {
-  errorHandler,
-  NotFoundError,
-} from "@ticketing-backend-packages/common";
-
-dotenv.config();
+import { errorHandler, NotFoundError } from "@rohxnrai/todo-backend";
 
 const app = express();
 

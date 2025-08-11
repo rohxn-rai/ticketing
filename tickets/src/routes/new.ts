@@ -1,9 +1,6 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import {
-  requireAuth,
-  validateRequest,
-} from "@ticketing-backend-packages/common";
+import { requireAuth, validateRequest } from "@rohxnrai/todo-backend";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();
