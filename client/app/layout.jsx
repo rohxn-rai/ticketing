@@ -33,7 +33,6 @@ const RootLayout = async ({ children }) => {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
           {children}
         </ThemeProvider>
 
