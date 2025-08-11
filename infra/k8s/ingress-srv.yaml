@@ -34,8 +34,8 @@ spec:
     - host: rabbitmq-ui.ticketing.dev
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /?(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: rabbitmq-srv
