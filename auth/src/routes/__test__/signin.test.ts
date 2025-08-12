@@ -11,7 +11,7 @@ it("fails when a email that does not exist is supplied", async () => {
     .expect(400);
 });
 
-it("fails when an incorrect passwprd is supplied", async () => {
+it("fails when an incorrect password is supplied", async () => {
   await request(app)
     .post("/api/users/signup")
     .send({
