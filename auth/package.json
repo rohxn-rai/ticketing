@@ -19,13 +19,11 @@
   },
   "dependencies": {
     "@rohxnrai/todo-backend": "^1.0.2",
-    "@types/amqplib": "^0.10.7",
     "@types/cookie-session": "^2.0.49",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.97",
-    "amqplib": "^0.10.8",
     "cookie-session": "^2.1.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
