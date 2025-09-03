@@ -1,6 +1,5 @@
 import { app } from "./app";
 import mongoose from "mongoose";
-import rabbitMQ from "./wrapper";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,16 +35,11 @@ const start = async () => {
   if (!process.env.MONGODB_URI) {
     throw new Error("MONGODB_URI must be defined");
   }
-  if (!process.env.RABBITMQ_URL) {
-    throw new Error("RABBITMQ_URL must be defined");
-  }
 
   await connectWithRetry(
     () => mongoose.connect(process.env.MONGODB_URI!),
     "MongoDB"
   );
-
-  await connectWithRetry(() => rabbitMQ.connect(), "RabbitMQ");
 
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
