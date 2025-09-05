@@ -6,9 +6,11 @@ import { getCurrentUser } from "@/utils/getCurrentUser";
 const HomePage = async () => {
   const currentUser = await getCurrentUser();
 
+  console.log(currentUser);
+
   return (
     <>
-      <Header />
+      <Header currentUser={currentUser} />
       <div className="container flex mx-auto pt-24 pb-12">
         {currentUser ? <AuthHomePage /> : <NoAuthHomePage />}
       </div>

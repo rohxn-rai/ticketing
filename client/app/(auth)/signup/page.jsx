@@ -28,6 +28,8 @@ const SignupPage = () => {
     event.preventDefault();
     setLoading(true);
 
+    console.log(event)
+
     await doRequest();
 
     setLoading(false);
