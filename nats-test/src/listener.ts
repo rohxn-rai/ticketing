@@ -18,7 +18,7 @@ stan.on ( "connect", () => {
     process.exit ()
   } )
   
-  new TicketCreatedListener(stan).listen()
+  new TicketCreatedListener ( stan ).listen ()
 } )
 
 process.on ( "SIGINT", () => stan.close () )
@@ -54,7 +54,7 @@ abstract class Listener {
     
     subscription.on ( "message", ( msg : Message ) => {
       console.log (
-        `Message received: ${ this.subject } / ${ this.queueGroupName }F.`
+        `Message received: ${ this.subject } / ${ this.queueGroupName }.`
       );
       
       const parsedData = this.parseMessage ( msg );
@@ -62,7 +62,7 @@ abstract class Listener {
     } )
   }
   
-  parseMessage ( msg : Message ) : void {
+  parseMessage ( msg : Message ) {
     const data = msg.getData ();
     
     return typeof data === "string"
@@ -77,6 +77,6 @@ class TicketCreatedListener extends Listener {
   
   onMessage ( data : any, msg : Message ) {
     console.log ( 'Event data!', data );
-    msg.ack();
+    msg.ack ();
   }
 }
