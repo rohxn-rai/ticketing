@@ -21,6 +21,9 @@ stan.on ( "connect", () => {
   const options = stan
     .subscriptionOptions ()
     .setManualAckMode ( true )
+    .setDeliverAllAvailable()
+    .setDurableName("accounting-service")
+    
   const subscription = stan.subscribe (
     "ticket:created",
     "orders-service-queue-group",
@@ -40,3 +43,4 @@ stan.on ( "connect", () => {
 
 process.on ( "SIGINT", () => stan.close () )
 process.on ( "SIGTERM", () => stan.close () )
+process.on ( "SIGBREAK", () => stan.close () )
