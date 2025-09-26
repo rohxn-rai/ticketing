@@ -19,7 +19,7 @@ class NatsWrapper {
       reject
     ) => {
       this.client.on ( "connect", () => {
-        console.log ( "Connected to NATS" )
+        console.log ( "✓ - Connected to NATS" )
         resolve ();
       } );
       

@@ -44,7 +44,19 @@ const start = async () => {
   
   try {
     await natsWrapper.connect ( "ticketing", "ticket-srv", "http://nats-srv:4222" );
-    await mongoose.connect ( process.env.MONGODB_URI )
+    
+    natsWrapper.client.on ( "close", () => {
+      console.log ( "Listener connection closed!" )
+      process.exit ()
+    } )
+    
+    process.on ( "SIGINT", () => natsWrapper.client.close () )
+    process.on ( "SIGTERM", () => natsWrapper.client.close () )
+    process.on ( "SIGBREAK", () => natsWrapper.client.close () )
+    
+    await mongoose.connect ( process.env.MONGODB_URI );
+    
+    console.log ( "✓ - Connected to MongoDB" )
   } catch ( err ) {
     console.error ( err )
   }
