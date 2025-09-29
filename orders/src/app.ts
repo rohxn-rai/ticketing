@@ -7,10 +7,10 @@ import {
   NotFoundError,
 } from "@rohxnrai/todo-backend";
 
-import { createTicketRouter } from "./routes/new";
-import { showTicketRouter } from "./routes/show";
-import { indexTicketRouter } from "./routes/index";
-import { updateTicketRouter } from "./routes/update";
+import { indexOrderRouter } from "./routes/index";
+import { deleteOrderRouter } from "./routes/delete";
+import { showOrderRouter } from "./routes/show";
+import { newOrderRouter } from "./routes/new";
 
 const app = express();
 
@@ -27,10 +27,10 @@ app.use(
 
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
+app.use(showOrderRouter);
+app.use(newOrderRouter);
 
 app.use(async (req, res, next) => {
   next(new NotFoundError());
