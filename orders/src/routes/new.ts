@@ -8,8 +8,8 @@ import {
   validateRequest
 } from "@rohxnrai/todo-backend";
 import mongoose from "mongoose";
-import { Ticket } from "../models/ticket";
 import { Order } from "../models/order";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router ();
 
@@ -21,8 +21,15 @@ router.post ( "/api/orders",
     body ( "ticketId" )
       .not ()
       .isEmpty ()
-      .custom ( ( input : string ) => mongoose.Types.ObjectId.isValid ( input ) )
-      .withMessage ( "TicketId must be provided." )
+      .custom ( ( input : string ) => {
+        if ( !mongoose.Types.ObjectId.isValid ( input ) ) {
+          return false;
+        }
+        if ( (String) ( new mongoose.Types.ObjectId ( input ) ) === input ) {
+          return true;
+        }
+        return false;
+      } )
   ],
   validateRequest,
   async ( req : Request, res : Response ) => {
@@ -33,13 +40,11 @@ router.post ( "/api/orders",
     if ( !ticket ) {
       throw new NotFoundError ();
     }
-    
     const isReserved = await ticket.isReserved ();
     
     if ( isReserved ) {
       throw new BadRequestError ( "Ticket is already reserved." );
     }
-    
     const expiration = new Date ();
     
     expiration.setSeconds ( expiration.getSeconds () + EXPIRATION_WINDOW_SECONDS );
