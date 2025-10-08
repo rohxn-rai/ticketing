@@ -22,13 +22,8 @@ router.post ( "/api/orders",
       .not ()
       .isEmpty ()
       .custom ( ( input : string ) => {
-        if ( !mongoose.Types.ObjectId.isValid ( input ) ) {
-          return false;
-        }
-        if ( (String) ( new mongoose.Types.ObjectId ( input ) ) === input ) {
-          return true;
-        }
-        return false;
+        return mongoose.Types.ObjectId.isValid ( input ) &&
+          String ( new mongoose.Types.ObjectId ( input ) ) === input;
       } )
   ],
   validateRequest,
