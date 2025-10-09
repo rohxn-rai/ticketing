@@ -68,6 +68,48 @@ it ( "it reserves a ticket", async () => {
   const orders = await Order.find ( {} );
   
   expect ( orders.length ).toEqual ( 1 );
-  expect ( orders[0].ticket.toString() ).toEqual ( ticket.id.toString() );
+  expect ( orders[0].ticket.toString () ).toEqual ( ticket.id.toString () );
   expect ( orders[0].status ).toEqual ( OrderStatus.Created );
 } );
+
+it ( "blocks request from an already reserved ticket", async () => {
+  const ticket = Ticket.build ( {
+    title : "concert",
+    price : 19.99
+  } );
+  
+  await ticket.save ();
+  
+  const tickets = await Ticket.find ( {} );
+  
+  expect ( tickets.length ).toEqual ( 1 );
+  
+  const ticketId = tickets[0].id;
+  
+  const userOne = signup ();
+  const userTwo = signup ();
+  
+  await request ( app )
+    .post ( "/api/orders" )
+    .set ( "Cookie", userOne )
+    .send ( {
+      ticketId : ticketId
+    } )
+    .expect ( 201 );
+  
+  await request ( app )
+    .post ( "/api/orders" )
+    .set ( "Cookie", userTwo )
+    .send ( {
+      ticketId : ticketId
+    } )
+    .expect ( 400, {
+      errors : [
+        {
+          message : "Ticket is already reserved."
+        }
+      ]
+    } );
+} )
+
+it.todo ( "emits an order created event" )
