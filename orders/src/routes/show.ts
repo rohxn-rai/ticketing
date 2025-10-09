@@ -1,14 +1,36 @@
 import express, { Request, Response } from "express";
+import {
+  BadRequestError,
+  NotAuthorizedError,
+  NotFoundError,
+  requireAuth
+} from "@rohxnrai/todo-backend";
+import { Order } from "../models/order";
+import mongoose from "mongoose";
 
 const router = express.Router ();
 
 router.get (
   "/api/orders/:orderId",
+  requireAuth,
   async (
     req : Request,
     res : Response
   ) => {
-    res.send ( {} );
+    const orderId = req.params.orderId
+    if ( !mongoose.Types.ObjectId.isValid ( orderId ) )
+      throw new BadRequestError ( "Not a valid Order ID." );
+    
+    const order = await Order.findById ( orderId )
+      .populate ( "ticket" )
+    
+    if ( !order )
+      throw new NotFoundError ();
+    
+    if ( order.userId !== req.currentUser!.id )
+      throw new NotAuthorizedError ();
+    
+    res.send ( order );
   } )
 
 export { router as showOrderRouter }
