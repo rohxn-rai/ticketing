@@ -34,7 +34,7 @@ router.patch (
     
     await order.save ();
     
-    res.send ( {} );
+    res.status ( 204 ).send ( order );
   } )
 
 export { router as cancelOrderRouter }
